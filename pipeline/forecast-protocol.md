@@ -37,12 +37,21 @@ Gather inputs and **write a shared context file** so strategist agents don't dup
    - Watch-asset list from `$CLAUDE_PLUGIN_ROOT/defaults/watch-assets.yaml`
    - Horizons from `$CLAUDE_PLUGIN_ROOT/defaults/horizons.yaml`
 
-2. **MANDATORY**: Write all of the above into **`$FORECAST_RUN/shared-context.md`** using the Write tool. This file must include:
-   - The full world-model snapshot
-   - The previous forecast tail
-   - The watch-asset symbol list (just symbols, one per line)
-   - The horizon IDs (1d, 1w, 1m, 3m)
+2. **MANDATORY**: Build `$FORECAST_RUN/shared-context.md` by **mechanically concatenating** the source files — do NOT summarize, paraphrase, or abridge any content.
+
+   Use a bash command to assemble the file:
+   ```bash
+   # Step 2a: Copy world-model VERBATIM (do NOT summarize)
+   cp "$OPC_IR_HOME/world/world-model.md" "$FORECAST_RUN/shared-context.md"
+   ```
+
+   Then APPEND the remaining sections using the Write/Edit tool:
+   - Previous forecast tail (last 3 forecasts from `forecast.jsonl` if available — key distribution numbers, not full JSON)
+   - Watch-asset symbol list (just symbols, one per line) from `$CLAUDE_PLUGIN_ROOT/defaults/watch-assets.yaml`
+   - Horizon IDs: `1d, 1w, 1m, 3m`
    - The invalidator format rules (copied verbatim from the "INVALIDATOR FORMAT RULES" section below)
+
+   > **🚫 DO NOT SUMMARIZE THE WORLD-MODEL.** The world-model.md must appear in shared-context.md **in full, unmodified**. Strategists need the complete analytical detail — not just bullet-point summaries of "Key Macro State." Every subsection (e.g., Indo-Pacific Security, Financial Stability, AI Regulation, Agriculture) contains signals that may affect specific assets. Summarizing loses these signals.
 
 3. Create the output directories:
    ```
@@ -52,7 +61,7 @@ Gather inputs and **write a shared context file** so strategist agents don't dup
 
 > **⚠️ WHY**: Each strategist agent is dispatched independently. Without a shared context file, the orchestrator must embed all context in every agent prompt (5× duplication). By writing to `$FORECAST_RUN/shared-context.md`, each agent prompt only needs to say `Read $FORECAST_RUN/shared-context.md` — saving ~60% of prompt tokens across the 5 agents.
 >
-> **⚠️ VERIFY**: After writing `shared-context.md`, confirm the file exists with `ls -la $FORECAST_RUN/shared-context.md`. If it doesn't exist, **FAIL**.
+> **⚠️ VERIFY**: After writing `shared-context.md`, verify its size: `wc -l $FORECAST_RUN/shared-context.md`. It MUST be at least 200 lines (the world-model alone is 300+ lines). If it's under 200 lines, the world-model was likely summarized — **FAIL and redo Step 2**.
 
 ### Step 2 — Independent Dispatch (Parallel)
 

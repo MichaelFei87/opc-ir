@@ -68,7 +68,10 @@ def aggregate_one(asset, horizon):
         if match is None:
             continue
 
-        posterior_raw = match.get("posterior_weight", 1.0)
+        # Read posterior from role-weights YAML (written by calibrate-posteriors.sh),
+        # NOT from strategist entry (strategists don't write posterior_weight).
+        role_weights_entry = forecast_weights.get(role, {})
+        posterior_raw = role_weights_entry.get("posterior_weight", 1.0)
         posterior = max(0.5, min(1.5, posterior_raw))
         effective = prior * posterior
 

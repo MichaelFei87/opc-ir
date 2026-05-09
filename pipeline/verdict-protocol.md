@@ -53,10 +53,45 @@ Dispatch each of the following 7 roles in parallel:
 Each receives: role file (read and include in the agent prompt), context, target asset.
 Each produces: direction (long/short/neutral) + thesis + falsifier.
 
+> **⚠️ STRUCTURED OUTPUT REQUIREMENT**: Each school/advocate agent MUST write a **JSON** file (NOT YAML):
+> `$VERDICT_RUN/school-outputs/{role-name}.json`
+>
+> The file is a single JSON object:
+> ```json
+> {
+>   "role": "fundamental-analyst",
+>   "asset": "NDX",
+>   "direction": "long",
+>   "confidence": 0.75,
+>   "thesis": "Strong AI capex cycle supports NDX earnings growth...",
+>   "falsifier": "NDX drops below 27000 within 30 days on NASDAQ correction",
+>   "key_risks": ["Tariff escalation", "Energy cost pass-through"],
+>   "timeframe": "1m",
+>   "weight": 1.0
+> }
+> ```
+>
+> - Schools set `"weight": 1.0`; advocates set `"weight": 0.5`
+> - **⚠️ CRITICAL**: The downstream `verdict-aggregate.sh` reads JSON via `json.load()`.
+>   If the agent writes YAML instead of JSON, the pipeline WILL FAIL.
+>   Include this instruction verbatim in every agent prompt:
+>   "You MUST write your output as a JSON object using the Write tool. Do NOT use YAML format.
+>    The file extension MUST be .json and the content MUST be valid JSON."
+
+### Step 2b — Assemble Votes JSON
+
+After all 7 agents complete, the orchestrator assembles their outputs into a single `votes.json` array:
+
+1. Read each `$VERDICT_RUN/school-outputs/{role-name}.json`
+2. Combine into a JSON array: `[{role1_output}, {role2_output}, ...]`
+3. Write to `$VERDICT_RUN/votes.json`
+
+This file is the input to `verdict-aggregate.sh`.
+
 ### Step 3 — Vote Aggregation
 
-Run `verdict-aggregate.sh`:
-- Weight by role-weights (advocates at 0.5× prior)
+Run `verdict-aggregate.sh $VERDICT_RUN/votes.json $VERDICT_RUN/verdict.json`:
+- Weight by role-weights (advocates at 0.5× prior via the `weight` field in each vote)
 - Produce consensus distribution
 - Extract dominant stance
 
@@ -78,19 +113,18 @@ Run `thesis-update.sh <opc-ir-home> <ticker> <verdict.json>` to persist the new 
 
 ## Output Format
 
-Each school/advocate must produce:
+Each school/advocate must produce a **JSON** file (see Step 2 for the exact schema and write instructions).
 
-```yaml
-asset: <symbol>
-direction: <long|short|neutral>
-confidence: <0.0-1.0>
-thesis: "<2-3 sentence directional thesis>"
-falsifier: "<specific condition with numeric + temporal + asset/event>"
-key_risks:
-  - "<risk 1>"
-  - "<risk 2>"
-timeframe: "<primary horizon this verdict targets>"
-```
+Required fields:
+- `role`: role name (e.g. `"fundamental-analyst"`)
+- `asset`: target ticker symbol
+- `direction`: `"long"` | `"short"` | `"neutral"`
+- `confidence`: float 0.0–1.0
+- `thesis`: 2–3 sentence directional thesis
+- `falsifier`: specific condition (must pass `falsifier-lint.sh`)
+- `key_risks`: array of risk strings
+- `timeframe`: primary horizon (`"1d"`, `"1w"`, `"1m"`, `"3m"`)
+- `weight`: `1.0` for schools, `0.5` for advocates
 
 ## Verdict Digest
 
