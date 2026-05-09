@@ -1,0 +1,13 @@
+# OPC-IR Triage Classifier Thresholds
+watcher_route_threshold: 0.6
+hard_rule_verdict_threshold: 0.85
+hard_rules:
+  - pattern: "central bank policy decision"
+    description: "Fed, ECB, PBOC, BOJ rate decisions or QE announcements"
+  - pattern: "war declaration or ceasefire"
+    description: "Armed conflict escalation or de-escalation"
+  - pattern: "earnings of NDX top-10 constituent"
+    description: "AAPL, MSFT, NVDA, AMZN, META, GOOG, AVGO, TSLA, COST, NFLX"
+  - pattern: "circuit breaker or market halt"
+    description: "Exchange trading halt due to volatility limits"
+max_batch_size: 20

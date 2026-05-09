@@ -1,0 +1,105 @@
+# OPC-IR Watch Assets — 24 instruments + 2 options proxies
+# US + China scope (Phase 1 geographic focus)
+# `ticker` is the yfinance symbol used by fetch-market-data.sh.
+# If ticker == symbol, the field can be omitted (script falls back to symbol).
+assets:
+  - symbol: NDX
+    ticker: "^NDX"
+    class: equity-index
+    region: US
+  - symbol: SPX
+    ticker: "^GSPC"
+    class: equity-index
+    region: US
+  - symbol: RUT
+    ticker: "^RUT"
+    class: equity-index
+    region: US
+  - symbol: MSFT
+    class: equity-single
+    region: US
+  - symbol: NVDA
+    class: equity-single
+    region: US
+  - symbol: GOOGL
+    class: equity-single
+    region: US
+  - symbol: META
+    class: equity-single
+    region: US
+  - symbol: TSM
+    class: equity-single
+    region: TW
+  - symbol: VIX
+    ticker: "^VIX"
+    class: volatility
+    region: US
+  - symbol: HSI
+    ticker: "^HSI"
+    class: equity-index
+    region: CN
+  - symbol: HSCEI
+    ticker: "^HSCE"
+    class: equity-index
+    region: CN
+  - symbol: CSI300
+    ticker: "000300.SS"
+    class: equity-index
+    region: CN
+  - symbol: DXY
+    ticker: "DX-Y.NYB"
+    class: currency
+    region: US
+  - symbol: CNH
+    ticker: "CNH=X"
+    class: currency
+    region: CN
+  - symbol: USDCNY
+    ticker: "USDCNY=X"
+    class: currency
+    region: CN
+  - symbol: GLD
+    ticker: "GC=F"
+    class: commodity
+    region: global
+  - symbol: ZB
+    ticker: "ZB=F"
+    class: fixed-income
+    region: US
+  - symbol: WTI
+    ticker: "CL=F"
+    class: commodity
+    region: global
+  - symbol: BTC
+    ticker: "BTC-USD"
+    class: crypto
+    region: global
+  - symbol: US3M
+    ticker: "^IRX"
+    class: yield-curve
+    region: US
+  - symbol: US2Y
+    ticker: "2YY=F"
+    class: yield-curve
+    region: US
+  - symbol: US5Y
+    ticker: "^FVX"
+    class: yield-curve
+    region: US
+  - symbol: US10Y
+    ticker: "^TNX"
+    class: yield-curve
+    region: US
+  - symbol: US30Y
+    ticker: "^TYX"
+    class: yield-curve
+    region: US
+  # Options proxies — used for options sentiment only (not price tracking)
+  - symbol: SPY
+    class: options-proxy
+    proxy_for: SPX
+    region: US
+  - symbol: QQQ
+    class: options-proxy
+    proxy_for: NDX
+    region: US

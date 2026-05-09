@@ -1,0 +1,9 @@
+{
+  "name": "opc-ir",
+  "description": "OPC-IR: Investment Research via Multi-Role Independent Voting. Produces World-Model evolution, Macro Forecasts, and single-asset Verdicts using the OPC methodology.",
+  "version": "0.1.0",
+  "author": {
+    "name": "OPC-IR Contributors"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,27 @@
+# Runtime data
+.opc-ir/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Harness state (per-session, not committed)
+.harness/
+.harness-*/
+
+# Worktrees
+.claude/worktrees/
+
+# Claude scheduled tasks
+.claude/scheduled_tasks.json
+.claude/scheduled_tasks.lock

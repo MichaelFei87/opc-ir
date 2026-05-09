@@ -1,0 +1,24 @@
+# OPC-IR Macro Dimension Weights
+# Used by triage classifier and watcher dispatch
+dimensions:
+  politics:
+    weight: 1.5
+    description: Government policy, regulation, geopolitics, elections, sanctions
+  econ-finance:
+    weight: 1.5
+    description: Central bank policy, interest rates, inflation, employment, GDP
+  military:
+    weight: 1.0
+    description: Armed conflicts, defense spending, arms deals, military exercises
+  tech-ai:
+    weight: 1.3
+    description: Technology sector, AI developments, chip industry, tech regulation
+  humanities:
+    weight: 0.8
+    description: Social movements, demographics, education, cultural shifts
+  energy-commodity:
+    weight: 1.0
+    description: Oil, gas, metals, agriculture, energy policy, supply chains
+  corp-fundamentals:
+    weight: 1.2
+    description: Earnings, M&A, IPOs, bankruptcies, management changes

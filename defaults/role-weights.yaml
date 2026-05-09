@@ -1,0 +1,33 @@
+# OPC-IR Role Weights — Cold-start priors
+# All posterior_weight fields are absent (cold-start: treated as 1.0)
+# Posteriors only written by calibration after N>=30 samples per role
+
+schools:
+  fundamental-analyst:
+    prior_weight: 1.0
+  technical-analyst:
+    prior_weight: 1.0
+  macro-economist:
+    prior_weight: 1.0
+  quant-modeler:
+    prior_weight: 1.0
+  behavioral-analyst:
+    prior_weight: 1.0
+
+advocates:
+  bull-advocate:
+    prior_weight: 0.5
+  bear-advocate:
+    prior_weight: 0.5
+
+forecast:
+  macro-strategist:
+    prior_weight: 1.0
+  cross-asset-allocator:
+    prior_weight: 1.0
+  regime-detector:
+    prior_weight: 1.0
+  historical-analogist:
+    prior_weight: 1.0
+  contrarian-strategist:
+    prior_weight: 1.0

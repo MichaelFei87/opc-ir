@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["run_id", "timestamp", "world_model_ref", "forecasts", "strategist_dissent", "invalidators", "regime_marker"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "world_model_ref": { "type": "string" },
+    "regime_marker": { "type": ["string", "null"] },
+    "forecasts": {
+      "type": "object",
+      "patternProperties": {
+        "^[A-Z0-9]+$": {
+          "type": "object",
+          "patternProperties": {
+            "^(1d|1w|1m|3m)$": {
+              "type": "object",
+              "required": ["strongly_bearish", "bearish", "neutral", "bullish", "strongly_bullish"],
+              "properties": {
+                "strongly_bearish": { "type": "number", "minimum": 0, "maximum": 1 },
+                "bearish": { "type": "number", "minimum": 0, "maximum": 1 },
+                "neutral": { "type": "number", "minimum": 0, "maximum": 1 },
+                "bullish": { "type": "number", "minimum": 0, "maximum": 1 },
+                "strongly_bullish": { "type": "number", "minimum": 0, "maximum": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "strategist_dissent": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["strategist", "asset", "horizon", "l1_distance"],
+        "properties": {
+          "strategist": { "type": "string" },
+          "asset": { "type": "string" },
+          "horizon": { "type": "string" },
+          "l1_distance": { "type": "number" },
+          "distribution": { "type": "object" }
+        }
+      }
+    },
+    "invalidators": {
+      "type": "object",
+      "patternProperties": {
+        "^[A-Z0-9]+$": {
+          "type": "object",
+          "patternProperties": {
+            "^(1d|1w|1m|3m)$": { "type": "string", "minLength": 20 }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["event_id", "dimension_scores", "watchers_to_dispatch", "hard_rule_hit", "verdict_targets"],
+  "properties": {
+    "event_id": { "type": "string" },
+    "dimension_scores": {
+      "type": "object",
+      "required": ["politics", "econ-finance", "military", "tech-ai", "humanities", "energy-commodity", "corp-fundamentals"],
+      "properties": {
+        "politics": { "type": "number", "minimum": 0, "maximum": 1 },
+        "econ-finance": { "type": "number", "minimum": 0, "maximum": 1 },
+        "military": { "type": "number", "minimum": 0, "maximum": 1 },
+        "tech-ai": { "type": "number", "minimum": 0, "maximum": 1 },
+        "humanities": { "type": "number", "minimum": 0, "maximum": 1 },
+        "energy-commodity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "corp-fundamentals": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "watchers_to_dispatch": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["politics", "econ-finance", "military", "tech-ai", "humanities", "energy-commodity", "corp-fundamentals"]
+      }
+    },
+    "hard_rule_hit": { "type": "boolean" },
+    "verdict_targets": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

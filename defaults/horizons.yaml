@@ -1,0 +1,18 @@
+# OPC-IR Forecast Horizons
+horizons:
+  - id: 1d
+    label: 1 Day
+    calendar_days: 1
+    description: Next trading session
+  - id: 1w
+    label: 1 Week
+    calendar_days: 7
+    description: Next 5 trading sessions
+  - id: 1m
+    label: 1 Month
+    calendar_days: 30
+    description: Next ~22 trading sessions
+  - id: 3m
+    label: 3 Months
+    calendar_days: 90
+    description: Next quarter

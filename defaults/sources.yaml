@@ -1,0 +1,53 @@
+# OPC-IR Event Sources — RSS feeds for Phase 1-3
+# type: rss (default), api (Phase 5 premium), scrape (deprecated)
+sources:
+  - id: reuters-business
+    url: https://feeds.reuters.com/reuters/businessNews
+    type: rss
+    region: global
+    timeout_seconds: 10
+  - id: reuters-markets
+    url: https://feeds.reuters.com/reuters/marketsNews
+    type: rss
+    region: global
+    timeout_seconds: 10
+  - id: ap-business
+    url: https://feeds.apnews.com/rss/business
+    type: rss
+    region: US
+    timeout_seconds: 10
+  - id: bbc-business
+    url: https://feeds.bbci.co.uk/news/business/rss.xml
+    type: rss
+    region: global
+    timeout_seconds: 10
+  - id: cnbc-economy
+    url: https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258
+    type: rss
+    region: US
+    timeout_seconds: 10
+  - id: ft-markets
+    url: https://www.ft.com/rss/markets
+    type: rss
+    region: global
+    timeout_seconds: 10
+  - id: bloomberg-markets
+    url: https://feeds.bloomberg.com/markets/news.rss
+    type: rss
+    region: global
+    timeout_seconds: 10
+  - id: scmp-economy
+    url: https://www.scmp.com/rss/91/feed
+    type: rss
+    region: CN
+    timeout_seconds: 15
+  - id: fed-press
+    url: https://www.federalreserve.gov/feeds/press_all.xml
+    type: rss
+    region: US
+    timeout_seconds: 10
+  - id: ecb-press
+    url: https://www.ecb.europa.eu/rss/press.html
+    type: rss
+    region: EU
+    timeout_seconds: 10

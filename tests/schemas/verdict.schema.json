@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["run_id", "timestamp", "ticker", "world_model_ref", "forecast_ref", "consensus", "votes", "preserved_dissent", "falsifiers", "regime_marker"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "ticker": { "type": "string" },
+    "world_model_ref": { "type": "string" },
+    "forecast_ref": { "type": "string" },
+    "regime_marker": { "type": ["string", "null"] },
+    "consensus": {
+      "type": "object",
+      "required": ["direction", "conviction", "horizon"],
+      "properties": {
+        "direction": { "type": "string", "enum": ["long", "short", "neutral", "split"] },
+        "conviction": { "type": "number", "minimum": 0, "maximum": 1 },
+        "horizon": { "type": "string" }
+      }
+    },
+    "votes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "direction", "weight", "weighted_score"],
+        "properties": {
+          "role": { "type": "string" },
+          "direction": { "type": "string", "enum": ["long", "short", "neutral"] },
+          "weight": { "type": "number" },
+          "weighted_score": { "type": "number" }
+        }
+      }
+    },
+    "preserved_dissent": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "direction", "reasoning_summary"],
+        "properties": {
+          "role": { "type": "string" },
+          "direction": { "type": "string" },
+          "reasoning_summary": { "type": "string" }
+        }
+      }
+    },
+    "falsifiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "condition"],
+        "properties": {
+          "role": { "type": "string" },
+          "condition": { "type": "string", "minLength": 20 }
+        }
+      }
+    }
+  }
+}
